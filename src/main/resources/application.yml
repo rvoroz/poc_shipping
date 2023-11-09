@@ -7,3 +7,6 @@ spring:
 
     hikari:
       maximum-pool-size: 10
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
