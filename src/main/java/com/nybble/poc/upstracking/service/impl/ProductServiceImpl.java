@@ -1,15 +1,15 @@
 
-package com.nybble.poc.upstracking.controller.service.impl;
+package com.nybble.poc.upstracking.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.nybble.poc.upstracking.controller.service.ProductService;
 import com.nybble.poc.upstracking.entities.Product;
 import com.nybble.poc.upstracking.mapper.ProductMapper;
+import com.nybble.poc.upstracking.service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-    private ProductMapper productMapper;
+    private final ProductMapper productMapper;
 
     public ProductServiceImpl(ProductMapper productMapper){
         this.productMapper = productMapper;

@@ -1,4 +1,4 @@
-package com.nybble.poc.upstracking.controller.service;
+package com.nybble.poc.upstracking.service;
 
 import com.nybble.poc.upstracking.entities.Product;
 
