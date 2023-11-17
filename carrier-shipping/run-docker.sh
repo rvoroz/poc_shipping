@@ -1,0 +1,1 @@
+docker run -it -d --name springboot-propify-shipping -p 8080:8080 carrier-shipping

@@ -1,0 +1,56 @@
+spring:
+  profiles:
+    active: "local"
+    hikari:
+      maximum-pool-size: 10
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+mybatis:
+  configuration:
+    mapunderscoretocamelcase: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: ZrPGedhYkxgiwfr3I1uh
+shipping:
+  sandbox: true
+  host: http://localhost:8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: ZrPGedhYkxgiwfr3I1uh
+shipping:
+  sandbox: true
+  host: https://dev.se-propify-ups.nybblenetwork.com
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: ZrPGedhYkxgiwfr3I1uh
+shipping:
+  sandbox: false
+  host: https://prod.se-propify-ups.nybblenetwork.com

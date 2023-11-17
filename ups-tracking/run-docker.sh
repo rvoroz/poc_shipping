@@ -1,1 +1,0 @@
-docker run -it -d --name springboot-ups-shipping -p 8080:8080 ups-tracking
