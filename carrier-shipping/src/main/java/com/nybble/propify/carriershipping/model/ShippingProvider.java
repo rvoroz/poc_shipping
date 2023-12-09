@@ -1,4 +1,4 @@
-package com.nybble.propify.carriershipping.entities;
+package com.nybble.propify.carriershipping.model;
 
 import lombok.Builder;
 import lombok.Data;

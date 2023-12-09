@@ -1,8 +1,13 @@
 package com.nybble.propify.carriershipping.controller;
 
-import com.nybble.propify.carriershipping.dto.TrackingDetailResponse;
+import com.nybble.propify.carriershipping.entities.TrackingDetailResponse;
 import com.nybble.propify.carriershipping.service.impl.TrackingService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -19,19 +24,21 @@ public class TrackingController {
     }
 
     /**
-     * TODO
+     * Get tracking detail by tracking number
      *
      * @param trackingNumber
      * @return track Detaisl
      */
-    @GetMapping("/detail/{carrier}/{trackingNumber}")
-    public TrackingDetailResponse returnTrackingDetails(@PathVariable("carrier") String carrier,
-                                        @PathVariable("trackingNumber") String trackingNumber){
+    @ApiOperation( value = "This API will get tracking detail by tracking number."
+            ,  authorizations = @Authorization(value = "Bearer"))
+    @GetMapping("/{carrier}/detail/{trackingNumber}")
+    public ResponseEntity<TrackingDetailResponse>  returnTrackingDetails(@PathVariable("carrier") @Parameter(example = "ups") String carrier,
+                                                                         @PathVariable("trackingNumber") @Parameter(example = "1ZXXXXXXXXXXXXXXXX") String trackingNumber){
         UUID requestId = UUID.randomUUID();
         log.info("returnTrackingDetails - START - Request {} -trackingNumber {} - {} carrier ", requestId, trackingNumber,carrier.toUpperCase());
         TrackingDetailResponse trackDetail = trackingService.findTrackPackageInformationByTrackingNumber(requestId, carrier, trackingNumber);
         log.info("returnTrackingDetails - END - Request {} - trackingNumber {} - {} carrier ", requestId, trackingNumber, carrier.toUpperCase());
-        return trackDetail;
+        return new ResponseEntity<>(trackDetail, HttpStatus.OK);
     }
 
 }

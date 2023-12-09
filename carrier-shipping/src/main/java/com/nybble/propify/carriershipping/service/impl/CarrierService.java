@@ -1,6 +1,6 @@
 package com.nybble.propify.carriershipping.service.impl;
 
-import com.nybble.propify.carriershipping.entities.Carrier;
+import com.nybble.propify.carriershipping.model.Carrier;
 import com.nybble.propify.carriershipping.exception.CarrierNotFoundException;
 import com.nybble.propify.carriershipping.mapper.CarrierMapper;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class CarrierService {
         if (carrier.isPresent()) {
             return carrier.get();
         } else {
-            throw new CarrierNotFoundException("Carrier with label '"+ carrierLabel +"' was not found");
+            throw new CarrierNotFoundException(carrierLabel);
         }
     }
 

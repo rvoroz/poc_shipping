@@ -1,0 +1,27 @@
+{
+  "requestId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "serviceType": "02",
+  "shipFrom": {
+    "address": {
+      "city": "Alpharetta",
+      "countryCode": "US",
+      "postalCode": 30005,
+      "postalCodeExt": "string",
+      "stateCode": "GA",
+      "streetAddress": "2311 York Rd"
+    },
+    "name": "T and T Designs"
+  },
+  "shipTo": {
+    "address": {
+      "city": "Alpharetta",
+      "countryCode": "US",
+      "postalCode": 30005,
+      "postalCodeExt": "string",
+      "stateCode": "GA",
+      "streetAddress": "2311 York Rd"
+    },
+    "name": "T and T Designs"
+  },
+  "shippingAccountId": "C7R090"
+}

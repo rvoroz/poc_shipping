@@ -1,6 +1,6 @@
 package com.nybble.propify.carriershipping.mapper;
 
-import com.nybble.propify.carriershipping.entities.Carrier;
+import com.nybble.propify.carriershipping.model.Carrier;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

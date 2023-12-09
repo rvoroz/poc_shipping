@@ -3,6 +3,7 @@ package com.nybble.propify.carriershipping.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.nybble.propify.carriershipping.exception.*;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,29 +16,41 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.nybble.propify.carriershipping.entities.ApiError;
 import com.nybble.propify.carriershipping.entities.UpsResponseError;
-import com.nybble.propify.carriershipping.exception.AddressValidationException;
-import com.nybble.propify.carriershipping.exception.UpsException;
-import com.nybble.propify.carriershipping.exception.UpsProviderApiException;
 
 @ControllerAdvice
 public class HandleExceptionController extends ResponseEntityExceptionHandler {
 
-    public static String UPS_SERVICE_GENERIC_ERROR = "1000";
-    public static String ADDRESS_VALIDATION_GENERIC_ERROR = "1001";
-    public static String ADDRESS_VALIDATION_REQUEST_ERROR = "1002";
+    /**
+     * ERRORS Code creation nomenclature
+     * F Functionality
+     * 1 = General
+     * 2 = Address Validation
+     * 3 = Shipment
+     * 4 = Tracking
+     * XXX Error Code Exception
+     */
+    public static final String UPS_SERVICE_GENERIC_ERROR = "1000";
+    public static final String UPS_GENERIC_BAD_REQUEST_ERROR = "1001";
+    public static final String CARRIER_NOT_FOUND = "1001";
+    public static final String PAYMENT_INFO_NOT_FOUND = "1002";
+    public static final String ADDRESS_VALIDATION_GENERIC_ERROR = "2001";
+    public static final String ADDRESS_VALIDATION_REQUEST_ERROR = "2002";
+    public static final String SHIPMENT_RESPONSE_PARSER_ERROR = "3001";
+    public static final String SHIPMENT_SHIPPER_NOT_FOUND = "3002";
+    public static final String SHIPMENT_SERVICE_TYPE_NOT_FOUND = "3003";
+    public static final String SHIPMENT_SERVICE_PERSIST_CARRIER_ERROR = "3004";
+    public static final String CARRIER_LABEL_NOT_FOUND = "4001";
+    public static final String CARRIER_LABEL_PDF_ERROR = "4002";
+    public static final String TRACKING_RESPONSE_PARSER_ERROR = "5001";
 
     @ExceptionHandler(value = { AddressValidationException.class })
-    protected ResponseEntity<Object> handleConflict(
-            AddressValidationException ex, WebRequest request) {
-        ApiError apiError = ApiError.builder()
-                .code(ADDRESS_VALIDATION_GENERIC_ERROR).message(ex.getMessage()).build();
-
+    protected ResponseEntity<Object> handleConflict(AddressValidationException ex, WebRequest request) {
+        ApiError apiError = ApiError.builder().code(ADDRESS_VALIDATION_GENERIC_ERROR).message(ex.getMessage()).build();
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = { UpsException.class })
-    protected ResponseEntity<Object> handleConflict(
-            UpsException ex, WebRequest request) {
+    protected ResponseEntity<Object> handleConflict(UpsException ex, WebRequest request) {
 
         ApiError apiError = null;
         if (!ex.getErrors().getErrors().isEmpty()) {
@@ -50,12 +63,8 @@ public class HandleExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = { UpsProviderApiException.class })
-    protected ResponseEntity<Object> handleConflict(
-            UpsProviderApiException ex, WebRequest request) {
-
-        ApiError apiError = ApiError.builder().code(UPS_SERVICE_GENERIC_ERROR).message(ex.getMessage()).build();
-
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<Object> handleConflict(UpsProviderApiException ex, WebRequest request) {
+        return new ResponseEntity<>(getApiError(ex), HttpStatus.EXPECTATION_FAILED);
     }
 
     @Override
@@ -73,4 +82,24 @@ public class HandleExceptionController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = { BadRequestException.class })
+    protected ResponseEntity<Object> handleBadRequestNotFoundExceptions(BadRequestException ex, WebRequest request) {
+        return new ResponseEntity<>(getApiError(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = { InternalErrorException.class })
+    protected ResponseEntity<Object> handleInternalErrorException(InternalErrorException ex, WebRequest request) {
+        return new ResponseEntity<>(getApiError(ex), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(value = { NotFoundException.class })
+    protected ResponseEntity<Object> handleNotFoundException(NotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(getApiError(ex), HttpStatus.NOT_FOUND);
+    }
+
+    private ApiError getApiError(ShippingBaseRunException ex) {
+        return ApiError.builder().code(ex.getExceptionCode()).message(ex.getMessage()).build();
+    }
+
 }

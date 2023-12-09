@@ -1,7 +1,9 @@
 package com.nybble.propify.carriershipping.exception;
 
-public class ShipperNotFoundException extends RuntimeException {
-    public ShipperNotFoundException(String message) {
-        super(message);
+import com.nybble.propify.carriershipping.controller.HandleExceptionController;
+
+public class ShipperNotFoundException extends BadRequestException {
+    public ShipperNotFoundException(String shipperNumberNotFound) {
+        super(HandleExceptionController.SHIPMENT_SHIPPER_NOT_FOUND, "Shipper for shipperNumber '"+ shipperNumberNotFound +"' was not found");
     }
 }

@@ -20,7 +20,7 @@ public class PaymentService {
         if (payment.isPresent()) {
             return payment.get();
         } else {
-            throw new PaymentNotFoundException("Payment for accountNumber '"+ accountNumber +"' was not found");
+            throw new PaymentNotFoundException(accountNumber);
         }
     }
 

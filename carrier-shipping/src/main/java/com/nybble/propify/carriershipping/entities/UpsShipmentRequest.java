@@ -26,10 +26,10 @@ public class UpsShipmentRequest {
                 .shipper(new Shipper(shipperModel))
                 .paymentInformation(new PaymentInformation(payment.getType(), payment.getAccountNumber()))
                 .service(new Service(serviceTypeCode) )
-                .shipFrom(new Ship (shipFrom.getName(), shipFrom.getAddress().getStreetAddress(), shipFrom.getAddress().getAdditionalInfoAddress(),
+                .shipFrom(new Ship (shipFrom.getName(), shipFrom.getAddress().getStreetAddress(), "",
                         shipFrom.getAddress().getStateCode(), shipFrom.getAddress().getCity(), shipFrom.getAddress().getPostalCode() ,
                         shipFrom.getAddress().getCountryCode()))
-                .shipTo(new Ship (shipTo.getName(), shipTo.getAddress().getStreetAddress(), shipTo.getAddress().getAdditionalInfoAddress(),
+                .shipTo(new Ship (shipTo.getName(), shipTo.getAddress().getStreetAddress(), "",
                         shipTo.getAddress().getStateCode(), shipTo.getAddress().getCity(), shipTo.getAddress().getPostalCode() ,
                         shipTo.getAddress().getCountryCode()))
                 .shipmentServiceOptions(new ShipmentServiceOptions(labelLinksIndicator))

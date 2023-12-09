@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.nybble.propify.carriershipping.entities.ApiToken;
+import com.nybble.propify.carriershipping.model.ApiToken;
 
 @Mapper
 public interface ApiTokenMapper{

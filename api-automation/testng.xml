@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+    <listeners>
+        <listener class-name="propify.utilities.Listeners"/>
+    </listeners>
+
+    <test name="Validate Brands">
+        <classes>
+        </classes>
+    </test>
+
+    <test name="Validating Cases">
+        <classes>
+            <class name="propify.api_tests.ValidateAddress"/>
+            <class name="propify.api_tests.GenerateShipment"/>
+            <class name="propify.api_tests.TrackingShipment"/>
+        </classes>
+    </test>
+
+
+</suite>

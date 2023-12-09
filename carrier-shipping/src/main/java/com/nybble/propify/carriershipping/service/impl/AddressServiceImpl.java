@@ -1,10 +1,10 @@
 package com.nybble.propify.carriershipping.service.impl;
 
+import com.nybble.propify.carriershipping.mapper.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 
 import com.nybble.propify.carriershipping.entities.AddressRequest;
 import com.nybble.propify.carriershipping.entities.AddressValidationResponse;
-import com.nybble.propify.carriershipping.mapper.AddressRepository;
 import com.nybble.propify.carriershipping.service.AddressService;
 
 @Service

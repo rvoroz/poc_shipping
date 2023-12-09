@@ -2,7 +2,7 @@ package com.nybble.propify.carriershipping.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.nybble.propify.carriershipping.entities.ApiToken;
+import com.nybble.propify.carriershipping.model.ApiToken;
 import com.nybble.propify.carriershipping.mapper.ApiTokenMapper;
 import com.nybble.propify.carriershipping.service.ApiTokenService;
 

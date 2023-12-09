@@ -3,7 +3,7 @@ package com.nybble.propify.carriershipping.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.nybble.propify.carriershipping.entities.ApiVersion;
+import com.nybble.propify.carriershipping.model.ApiVersion;
 import com.nybble.propify.carriershipping.mapper.ApiVersionMapper;
 import com.nybble.propify.carriershipping.service.ApiVersionService;
 

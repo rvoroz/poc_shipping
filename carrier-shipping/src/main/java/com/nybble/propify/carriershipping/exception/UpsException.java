@@ -4,12 +4,7 @@ import com.nybble.propify.carriershipping.entities.UpsResponse;
 
 public class UpsException extends RuntimeException {
 
-    private UpsResponse errors;
-
-    
-    public UpsException(String message) {
-        super(message);
-    }
+    private final UpsResponse errors;
 
     public UpsException(UpsResponse upsResponse) {
         this.errors = upsResponse;

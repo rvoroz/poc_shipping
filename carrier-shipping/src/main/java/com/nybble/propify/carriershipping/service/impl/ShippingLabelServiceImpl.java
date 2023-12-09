@@ -10,7 +10,9 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.nybble.propify.carriershipping.entities.CarrierShipment;
+import com.nybble.propify.carriershipping.model.CarrierShipment;
+import com.nybble.propify.carriershipping.exception.CarrierLabelNotFoundException;
+import com.nybble.propify.carriershipping.exception.PDFGenerationException;
 import com.nybble.propify.carriershipping.mapper.CarrierShipmentMapper;
 import com.nybble.propify.carriershipping.service.ShippingLabelService;
 
@@ -31,7 +33,7 @@ public class ShippingLabelServiceImpl implements ShippingLabelService {
         if(shipment.isPresent()){
             return generatePDF(shipment.get().getShippingLabelImage());
         }
-        throw new RuntimeException("Label Not Found");
+        throw new CarrierLabelNotFoundException(id);
     }
 
     public ByteArrayOutputStream generatePDF(String imageString) {
@@ -50,7 +52,7 @@ public class ShippingLabelServiceImpl implements ShippingLabelService {
 
             return pdfData;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create PDF");
+            throw new PDFGenerationException(e);
         }
     }
 }

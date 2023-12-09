@@ -20,7 +20,7 @@ public class ShipperService {
         if (defaultShipper.isPresent()) {
             return defaultShipper.get();
         } else {
-            throw new ShipperNotFoundException("Shipper for shipperNumber '"+ shipperNumber +"' was not found");
+            throw new ShipperNotFoundException(shipperNumber);
         }
     }
 

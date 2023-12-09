@@ -1,7 +1,7 @@
 package com.nybble.propify.carriershipping.provider.oauth.impl;
 
 import com.nybble.propify.carriershipping.entities.OAuthToken;
-import com.nybble.propify.carriershipping.entities.ShippingProvider;
+import com.nybble.propify.carriershipping.model.ShippingProvider;
 import com.nybble.propify.carriershipping.provider.oauth.OAuthTokenService;
 
 import lombok.extern.slf4j.Slf4j;

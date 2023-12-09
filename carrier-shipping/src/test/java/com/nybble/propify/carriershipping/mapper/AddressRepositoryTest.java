@@ -28,51 +28,48 @@ import com.nybble.propify.carriershipping.provider.UPSProviderApi;
 @RunWith(SpringRunner.class)
 public class AddressRepositoryTest {
 
-    private AddressRepository addressRepository;
+        private AddressRepository addressRepository;
 
-    @Mock
-    private UPSProviderApi upsProviderApi;
+        @Mock
+        private UPSProviderApi upsProviderApi;
 
-    @Before
-    public void setUp() {
-        addressRepository = new AddressRepository(upsProviderApi);
-    }
+        @Before
+        public void setUp() {
+                addressRepository = new AddressRepository(upsProviderApi);
+        }
 
-    @Test
-    public void adddressValidate_whenAddressIsValid() throws JsonMappingException, JsonProcessingException {
-        AddressKeyFormat addressKeyFormat = AddressKeyFormat.builder()
-                .addressLine(new ArrayList<>(Arrays.asList("26601 ALISO CREEK ROAD", "STE D",
-                        "ALISO VIEJO TOWN CENTER")))
-                .countryCode("US")
-                .politicalDivision1("CA")
-                .politicalDivision2("ALISO VIEJO").build();
-        Candidate candidate = Candidate.builder().addressKeyFormat(addressKeyFormat).build();
-        List<Candidate> candidates = new ArrayList<>();
-        candidates.add(candidate);
-        XAVResponse xavResponse = XAVResponse.builder().candidate(candidates).build();
-        XAVResponseAddressValidation xavResponseAddressValidation = XAVResponseAddressValidation.builder()
-                .xAVResponse(xavResponse).build();
-        when(upsProviderApi.validateAddress(any(AddressRequest.class))).thenReturn(xavResponseAddressValidation);
+        @Test
+        public void adddressValidate_whenAddressIsValid() throws JsonMappingException, JsonProcessingException {
+                AddressKeyFormat addressKeyFormat = AddressKeyFormat.builder()
+                                .addressLine(new ArrayList<>(Arrays.asList("26601 ALISO CREEK ROAD", "STE D",
+                                                "ALISO VIEJO TOWN CENTER")))
+                                .countryCode("US")
+                                .politicalDivision1("CA")
+                                .politicalDivision2("ALISO VIEJO").build();
+                Candidate candidate = Candidate.builder().addressKeyFormat(addressKeyFormat).build();
+                List<Candidate> candidates = new ArrayList<>();
+                candidates.add(candidate);
+                XAVResponse xavResponse = XAVResponse.builder().candidate(candidates).build();
+                XAVResponseAddressValidation xavResponseAddressValidation = XAVResponseAddressValidation.builder()
+                                .xAVResponse(xavResponse).build();
+                when(upsProviderApi.validateAddress(any(AddressRequest.class)))
+                                .thenReturn(xavResponseAddressValidation);
 
-        List<String> addressLine = new ArrayList<>();
-        addressLine.add("26601 ALISO CREEK ROAD");
-        addressLine.add("STE D");
-        addressLine.add("ALISO VIEJO TOWN CENTER");
-        addressLine.add("CA");
-        AddressRequest addressRequest = AddressRequest.builder()
-                .addressLine(addressLine)
-                .city("ALISO VIEJO")
-                .state("CA").build();
+                AddressRequest addressRequest = AddressRequest.builder()
+                                .streetAddress("26601 ALISO CREEK ROAD")
+                                .additionalInfoAddress("STE D")
+                                .city("ALISO VIEJO")
+                                .stateCode("CA").build();
 
-        AddressValidationResponse addressValidationResponse = addressRepository.adddressValidate(addressRequest);
+                AddressValidationResponse addressValidationResponse = addressRepository
+                                .adddressValidate(addressRequest);
 
-        Assert.assertNotNull(addressValidationResponse);
-        Assert.assertEquals(1, addressValidationResponse.getCandidates().size());
-        CandidateAddress candidateResult = addressValidationResponse.getCandidates().get(0);
-        Assert.assertEquals("US", candidateResult.getCountryCode());
-        Assert.assertEquals("CA", candidateResult.getStateCode());
-        Assert.assertEquals("ALISO VIEJO", candidateResult.getCity());
-      //  Assert.assertEquals(3, candidateResult.getAddressLine().size()); //TODO fix this
-    }
+                Assert.assertNotNull(addressValidationResponse);
+                Assert.assertEquals(1, addressValidationResponse.getCandidates().size());
+                CandidateAddress candidateResult = addressValidationResponse.getCandidates().get(0);
+                Assert.assertEquals("US", candidateResult.getCountryCode());
+                Assert.assertEquals("CA", candidateResult.getStateCode());
+                Assert.assertEquals("ALISO VIEJO", candidateResult.getCity());
+        }
 
 }

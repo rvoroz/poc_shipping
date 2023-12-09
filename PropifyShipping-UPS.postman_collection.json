@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "4d96ce54-790f-4e48-869e-97e6f0aed7e6",
+		"name": "Shipping POC - UPS Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14019892",
+		"_collection_link": "https://tangome.postman.co/workspace/My-Workspace~b39bc59e-1091-4a91-8054-07fca4ef7fc4/collection/14019892-4d96ce54-790f-4e48-869e-97e6f0aed7e6?action=share&source=collection_link&creator=14019892"
+	},
+	"item": [
+		{
+			"name": "UPS - Get Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic UVRwd3ZkODBoa09rdm5tQUQ1WG1NR09GaW1TaURjWW9FYmlzN0RBOEtLenJlRWpZOmlETGtkemhBRXRlNmVEaVBFeXdHSGV1ZmNER2VSOFFKOFZWZzlpY0FLSUdHZXo3ZDIzY1FRSkRVTm1JZDRoTDg="
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://wwwcie.ups.com/security/v1/oauth/token",
+					"protocol": "https",
+					"host": [
+						"wwwcie",
+						"ups",
+						"com"
+					],
+					"path": [
+						"security",
+						"v1",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPS - Shipping Api",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzM4NCJ9.eyJzdWIiOiJlcmljQHNreWJveGNhcGl0YWwuY29tIiwiY2xpZW50aWQiOiJRVHB3dmQ4MGhrT2t2bm1BRDVYbU1HT0ZpbVNpRGNZb0ViaXM3REE4S0t6cmVFalkiLCJpc3MiOiJodHRwczovL2FwaXMudXBzLmNvbSIsInV1aWQiOiI5N0VGQTUwNC1BOTFGLTFEODYtOTlERC0yQzkwODA4QzU5MjEiLCJzaWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJhdWQiOiJTY29yZVRpY2tldHNBUEkiLCJhdCI6ImhSOTA5cTRuMHZWMEs3QUhua3RzS3BYM2RkS3QiLCJuYmYiOjE3MDAwNzU2MDQsIkRpc3BsYXlOYW1lIjoiU2NvcmVUaWNrZXRzQVBJIiwiZXhwIjoxNzAwMDkwMDA0LCJpYXQiOjE3MDAwNzU2MDQsImp0aSI6ImU3ZGI3NzA3LWIzMzUtNDIzOC05OTllLTJkNWFhYTQ3NDAwOCJ9.ap1sSK-AvjLsOz7XcfgMvkZi8qerGzaaXIeSGVRgV1-djkX7xG5deWPTFO6lsil_c-Q-rWLhKetQKc9AwoTmH1Cw-8p0-DqKVMrKZVBd0Hq_u47rXqZ1GOxvvlZmcZTq_qjB6tJGDKXY8cdW9Q0zctHrGLl530RJ7QmMFziTgYTQWeqs-w3zYZhav19cMHFxhv2Vc1o6SokS3Nq5H0lj0QR7nrRVkCztj0lyPlKKB3nvOY3BZMetYFt47x3vCq-TaWXSj5pXHrVKss-UHkTbNe8FI5tJOaBeabberYsgtiw96rFarp80kDLv0XJmZsbjNYuHA6UnHXjL1eZmi4NkkgYJ7CttGhS4lzt4NcDAp_4XEoyGX0ToC7iXZfz3Owsszq7MKsqUVZTd1kXaR5H4YuAVq_L8nDqIbFsCz4-0D3kAz5aWkzWQISDNX2Y3HR2VhNJLT9RLBF3o8sGzYQ2xCn0HU6rd8a405tkr65WAspop-FW5_CnfPi6GoPcSMKdnDJaQvV-cjHGUSzVOpatj34t4QgHh0RI94xj47ZshKPdShrVdMGKWyTwKwEcMllkg1AjoWI4lOij2kKyKkJZTZSJy9R0JkkQRRAzWblY86billzPNVGW5BtbjJCC_OU1tJmKdikqmi5uNdVu_7nZKWdzPTkxV54DTP7u3rWDD9oU"
+					},
+					{
+						"key": "transId",
+						"value": "string"
+					},
+					{
+						"key": "transactionSrc",
+						"value": "testing"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ShipmentRequest\": {\n      \"Shipment\": {\n        \"Shipper\": {\n          \"Name\": \"ShipperName\",\n          \"AttentionName\": \"ShipperZs Attn Name\",\n          \"TaxIdentificationNumber\": \"123456\",\n          \"ShipperNumber\": \"C7R090\",\n          \"Address\": {\n            \"AddressLine\": [\n              \"2311 York Rd\"\n            ],\n            \"City\": \"Timonium\",\n            \"StateProvinceCode\": \"MD\",\n            \"PostalCode\": \"21093\",\n            \"CountryCode\": \"US\"\n          }\n        },\n        \"ShipTo\": {\n          \"Name\": \"Happy Dog Pet Supply\",\n          \"Address\": {\n            \"AddressLine\": [\n              \"123 Main St\"\n            ],\n            \"City\": \"timonium\",\n            \"StateProvinceCode\": \"MD\",\n            \"PostalCode\": \"21030\",\n            \"CountryCode\": \"US\"\n          }\n        },\n        \"ShipFrom\": {\n          \"Name\": \"T and T Designs\",\n          \"Address\": {\n            \"AddressLine\": [\n              \"2311 York Rd\"\n            ],\n            \"City\": \"Alpharetta\",\n            \"StateProvinceCode\": \"GA\",\n            \"PostalCode\": \"30005\",\n            \"CountryCode\": \"US\"\n          }\n        },\n        \"PaymentInformation\": {\n          \"ShipmentCharge\": {\n            \"Type\": \"01\",\n            \"BillShipper\": {\n              \"AccountNumber\": \"C7R090\"\n            }\n          }\n        },\n        \"Service\": {\n          \"Code\": \"03\"\n        },\n        \"Package\": {\n          \"Packaging\": {\n            \"Code\": \"02\"\n          },\n          \"Dimensions\": {\n            \"UnitOfMeasurement\": {\n              \"Code\": \"IN\"\n            },\n            \"Length\": \"12.5\",\n            \"Width\": \"9.5\",\n            \"Height\": \"1\"\n          },\n          \"PackageWeight\": {\n            \"UnitOfMeasurement\": {\n              \"Code\": \"LBS\"\n            },\n            \"Weight\": \"0.5\"\n          }\n        },\n        \"ShipmentServiceOptions\": {\n            \"LabelDelivery\": {\n                \"LabelLinksIndicator\": \"true\"\n            }\n        }\n      }\n    }\n  }"
+				},
+				"url": {
+					"raw": "https://wwwcie.ups.com/api/shipments/v1/ship?additionaladdressvalidation=string",
+					"protocol": "https",
+					"host": [
+						"wwwcie",
+						"ups",
+						"com"
+					],
+					"path": [
+						"api",
+						"shipments",
+						"v1",
+						"ship"
+					],
+					"query": [
+						{
+							"key": "additionaladdressvalidation",
+							"value": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPS - Validate Address Api",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzM4NCJ9.eyJzdWIiOiJlcmljQHNreWJveGNhcGl0YWwuY29tIiwiY2xpZW50aWQiOiJRVHB3dmQ4MGhrT2t2bm1BRDVYbU1HT0ZpbVNpRGNZb0ViaXM3REE4S0t6cmVFalkiLCJpc3MiOiJodHRwczovL2FwaXMudXBzLmNvbSIsInV1aWQiOiI5N0VGQTUwNC1BOTFGLTFEODYtOTlERC0yQzkwODA4QzU5MjEiLCJzaWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJhdWQiOiJTY29yZVRpY2tldHNBUEkiLCJhdCI6IlZibnIzZlpkVmhxcWpJUHRWb0w4Wm83MzB0UnkiLCJuYmYiOjE3MDAxNDMzMjgsIkRpc3BsYXlOYW1lIjoiU2NvcmVUaWNrZXRzQVBJIiwiZXhwIjoxNzAwMTU3NzI4LCJpYXQiOjE3MDAxNDMzMjgsImp0aSI6ImNlZDQwMTQwLWE0YWQtNGY2MC05ODcyLWI3NzFlNzI0ODBkZSJ9.raIHzNiqb6OQn_ySUWLacwA8ztKtzVMqwayziJj9JCwgLz7vZeV-LZJvJdhJmlDtj0DaxJWTsBpm62Q_DAm2fTfXHmdn4H1Q1IQS-GTnwqwTeVuGv3cZ0aMBFHoYIEhaWvsCZASyaKlJxJU927d54Bty8Zs1RYVUgwlohotYxkkpgj5_G5-FlwXDAolzIZuUgaArL1uDyluOMaTlLzBfFo3vlq95GNWyEJp_JR60_ne9iV0_PeaUbUbQpkUOWSs7Dbw3lfSPvEQ1CdM3Szn1ITU1KuJyAEuWYeYCymTSYeyiOJ5Q4VZiTVmogUR59J7hJ5KgjuKPEMTdjLs2zC5q-s8L0ZijsDZoS1OqqfjlrhYkGwaX0xyjoMJy7xhKgmSW6Mw4APHg-LpyBFDm0asN0_iMBVvJgMOteJVwUyrpaVTFrV0ROVINTRVUObludMtyQjXkUA-_tgI_XzYcD2oHFYHnrmPpsD90e6YJhFXMetio71UJ_26UY681wvZk6Bdq47qYuk-nSpluqFA7knCwhikPER0aQjuzQOCe_xmdzg-wMq9rpI3rU9xPJTw7UnoK_IKSTbh8LTwZRlOZSP18xQCgN28dnaB1DoWvSVNFNisy5UlTzQUldhc9l9rmofdQOFBACkxOIOe4MQSvu29vf39exKnq_USVwpxODfGlDYw"
+					},
+					{
+						"key": "transId",
+						"value": "string"
+					},
+					{
+						"key": "transactionSrc",
+						"value": "testing"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"XAVRequest\": {\n      \"Request\": {\n        \"RequestOption\": \"3\"\n      },\n      \"AddressKeyFormat\": [{\n        \"ConsigneeName\": \"RITZ CAMERA CENTERS-1749\",\n        \"BuildingName\": \"Innoplex\",\n        \"AddressLine\": [\n          \"26601 ALISO CREEK ROAD\",\n          \"STE D\",\n          \"ALISO VIEJO TOWN CENTER\"\n        ],\n        \"PoliticalDivision2\": \"ALISO VIEJO\",\n        \"PoliticalDivision1\": \"CA\",\n        \"CountryCode\": \"US\"\n      }]\n    }\n  }"
+				},
+				"url": {
+					"raw": "https://wwwcie.ups.com/api/addressvalidation/v1/1",
+					"protocol": "https",
+					"host": [
+						"wwwcie",
+						"ups",
+						"com"
+					],
+					"path": [
+						"api",
+						"addressvalidation",
+						"v1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPS - Tracking",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJraWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzM4NCJ9.eyJzdWIiOiJlcmljQHNreWJveGNhcGl0YWwuY29tIiwiY2xpZW50aWQiOiJRVHB3dmQ4MGhrT2t2bm1BRDVYbU1HT0ZpbVNpRGNZb0ViaXM3REE4S0t6cmVFalkiLCJpc3MiOiJodHRwczovL2FwaXMudXBzLmNvbSIsInV1aWQiOiI5N0VGQTUwNC1BOTFGLTFEODYtOTlERC0yQzkwODA4QzU5MjEiLCJzaWQiOiI2NGM0YjYyMC0yZmFhLTQzNTYtYjA0MS1mM2EwZjM2Y2MxZmEiLCJhdWQiOiJTY29yZVRpY2tldHNBUEkiLCJhdCI6ImhSOTA5cTRuMHZWMEs3QUhua3RzS3BYM2RkS3QiLCJuYmYiOjE3MDAwNzU2MDQsIkRpc3BsYXlOYW1lIjoiU2NvcmVUaWNrZXRzQVBJIiwiZXhwIjoxNzAwMDkwMDA0LCJpYXQiOjE3MDAwNzU2MDQsImp0aSI6ImU3ZGI3NzA3LWIzMzUtNDIzOC05OTllLTJkNWFhYTQ3NDAwOCJ9.ap1sSK-AvjLsOz7XcfgMvkZi8qerGzaaXIeSGVRgV1-djkX7xG5deWPTFO6lsil_c-Q-rWLhKetQKc9AwoTmH1Cw-8p0-DqKVMrKZVBd0Hq_u47rXqZ1GOxvvlZmcZTq_qjB6tJGDKXY8cdW9Q0zctHrGLl530RJ7QmMFziTgYTQWeqs-w3zYZhav19cMHFxhv2Vc1o6SokS3Nq5H0lj0QR7nrRVkCztj0lyPlKKB3nvOY3BZMetYFt47x3vCq-TaWXSj5pXHrVKss-UHkTbNe8FI5tJOaBeabberYsgtiw96rFarp80kDLv0XJmZsbjNYuHA6UnHXjL1eZmi4NkkgYJ7CttGhS4lzt4NcDAp_4XEoyGX0ToC7iXZfz3Owsszq7MKsqUVZTd1kXaR5H4YuAVq_L8nDqIbFsCz4-0D3kAz5aWkzWQISDNX2Y3HR2VhNJLT9RLBF3o8sGzYQ2xCn0HU6rd8a405tkr65WAspop-FW5_CnfPi6GoPcSMKdnDJaQvV-cjHGUSzVOpatj34t4QgHh0RI94xj47ZshKPdShrVdMGKWyTwKwEcMllkg1AjoWI4lOij2kKyKkJZTZSJy9R0JkkQRRAzWblY86billzPNVGW5BtbjJCC_OU1tJmKdikqmi5uNdVu_7nZKWdzPTkxV54DTP7u3rWDD9oU"
+					},
+					{
+						"key": "transId",
+						"value": "string"
+					},
+					{
+						"key": "transactionSrc",
+						"value": "testing"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wwwcie.ups.com/api/track/v1/details/1ZXXXXXXXXXXXXXXXX?locale=en_US&returnSignature=false",
+					"protocol": "https",
+					"host": [
+						"wwwcie",
+						"ups",
+						"com"
+					],
+					"path": [
+						"api",
+						"track",
+						"v1",
+						"details",
+						"1ZXXXXXXXXXXXXXXXX"
+					],
+					"query": [
+						{
+							"key": "locale",
+							"value": "en_US"
+						},
+						{
+							"key": "returnSignature",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL - validate Address",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eYqK8plSaPfZIqemQe5uxRtlkGC6wf66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"streetAddress\": \"26601 ALISO CREEK ROAD\",\r\n    \"stateCode\": \"CA\", \r\n    \"city\": \"ALISO VIEJO\",\r\n    \"postalCode\": \"92656\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/propify/addressValidation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"propify",
+						"addressValidation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL - generate Shipment Copy 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eYqK8plSaPfZIqemQe5uxRtlkGC6wf66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shipFrom\": {\r\n        \"name\": \"T and T Designs\",\r\n        \"address\": {\r\n            \"streetAddress\": \"2311 York Rd\",\r\n            \"city\": \"Alpharetta\",\r\n            \"stateCode\": \"GA\",\r\n            \"postalCode\": \"30005\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"shipTo\": {\r\n        \"name\": \"Happy Dog Pet Supply\",\r\n        \"address\": {\r\n            \"streetAddress\": \"123 Main St\",\r\n            \"city\": \"timonium\",\r\n            \"stateCode\": \"MD\",\r\n            \"postalCode\": \"21030\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"shippingAccountId\": \"C7R090\",\r\n    \"serviceType\": \"03\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/propify/shipping/ups/generate",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"propify",
+						"shipping",
+						"ups",
+						"generate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL - Tracking",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eYqK8plSaPfZIqemQe5uxRtlkGC6wf66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/propify/tracking/ups/detail/1ZXXXXXXXXXXXXXXXX",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"propify",
+						"tracking",
+						"ups",
+						"detail",
+						"1ZXXXXXXXXXXXXXXXX"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEV - validate Address",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Mdw8RHxCYjcamwot3MNywS1tTFRlJRVM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \r\n    \"streetAddress\": \"26601 ALISO CREEK ROAD\",\r\n    \"stateCode\": \"CA\", \r\n    \"city\": \"ALISO VIEJO\",\r\n    \"postalCode\": \"92656\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev.se-propify-ups.nybblenetwork.com/api/propify/addressValidation",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"se-propify-ups",
+						"nybblenetwork",
+						"com"
+					],
+					"path": [
+						"api",
+						"propify",
+						"addressValidation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEV -generte Shipment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eYqK8plSaPfZIqemQe5uxRtlkGC6wf66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shipFrom\": {\r\n        \"name\": \"T and T Designs\",\r\n        \"address\": {\r\n            \"streetAddress\": \"2311 York Rd\",\r\n            \"city\": \"Alpharetta\",\r\n            \"stateCode\": \"GA\",\r\n            \"postalCode\": \"30005\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"shipTo\": {\r\n        \"name\": \"Happy Dog Pet Supply\",\r\n        \"address\": {\r\n            \"streetAddress\": \"123 Main St\",\r\n            \"city\": \"timonium\",\r\n            \"stateCode\": \"MD\",\r\n            \"postalCode\": \"21030\",\r\n            \"countryCode\": \"US\"\r\n        }\r\n    },\r\n    \"shippingAccountId\": \"C7R090\",\r\n    \"serviceType\": \"03\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev.se-propify-ups.nybblenetwork.com/api/propify/shipping/ups/generate",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"se-propify-ups",
+						"nybblenetwork",
+						"com"
+					],
+					"path": [
+						"api",
+						"propify",
+						"shipping",
+						"ups",
+						"generate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEV - Tracking",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eYqK8plSaPfZIqemQe5uxRtlkGC6wf66",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev.se-propify-ups.nybblenetwork.com/api/propify/tracking/ups/detail/1ZXXXXXXXXXXXXXXXX",
+					"protocol": "https",
+					"host": [
+						"dev",
+						"se-propify-ups",
+						"nybblenetwork",
+						"com"
+					],
+					"path": [
+						"api",
+						"propify",
+						"tracking",
+						"ups",
+						"detail",
+						"1ZXXXXXXXXXXXXXXXX"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

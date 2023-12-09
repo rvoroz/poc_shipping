@@ -1,12 +1,16 @@
 package com.nybble.propify.carriershipping.controller;
 
-import com.nybble.propify.carriershipping.dto.ShippingRequest;
-import com.nybble.propify.carriershipping.dto.CarrierShippingResponse;
+import com.nybble.propify.carriershipping.entities.ShippingRequest;
+import com.nybble.propify.carriershipping.entities.CarrierShippingResponse;
 import com.nybble.propify.carriershipping.service.impl.ShippingService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,21 +33,30 @@ public class ShippingController {
     }
 
     /**
-     * The Generate Tracking Number And Shipping Label API will generate Tracking Number And Shipping Label
-     * for a ship.
+     * This API will generate Tracking Number And Shipping Label for a ship for assigned carrier.
      *
      * @param shippingRequest
      * @return ShippingResponse
      */
-    @PostMapping("/generateLabel/{carrier}")
-    public  ResponseEntity<CarrierShippingResponse> generateTrackingNumberAndShippingLabel(@PathVariable("carrier") String carrier, @RequestBody ShippingRequest shippingRequest){
+    @Operation(summary = "Generate Tracking Number And Get Shipping label url",
+            description= "This API will generate Tracking Number And Shipping Label for a ship for assigned carrier."
+    )
+    @ApiOperation( value = "This API will generate Tracking Number And Shipping Label for a ship for assigned carrier."
+            ,  authorizations = @Authorization(value = "Bearer"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created"),
+            @ApiResponse(responseCode = "400", description = "Bad Request"),
+            @ApiResponse(responseCode = "417", description = "Expectation Failed: unexpected error integration with third party"),
+            @ApiResponse(responseCode = "500", description = "Internal server error") })
+
+
+    @PostMapping("/{carrier}/generate")
+    public  ResponseEntity<CarrierShippingResponse> generateTrackingNumberAndShippingLabel(@PathVariable("carrier") @Parameter(example = "ups") String carrier, @RequestBody ShippingRequest shippingRequest){
         generateTransactionRequestId(shippingRequest);
         log.info("GenerateTrackingNumberAndShippingLabel - START - Request {} - {} carrier ", shippingRequest.getRequestId(),carrier.toUpperCase());
         CarrierShippingResponse carrierShippingResponse = shippingService.processShipmentGeneration(carrier, shippingRequest);
         log.info("GenerateTrackingNumberAndShippingLabel - END - Request {} - {} carrier ", shippingRequest.getRequestId(), carrier.toUpperCase());
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity<>(carrierShippingResponse, headers, HttpStatus.OK);
+        return new ResponseEntity<>(carrierShippingResponse, HttpStatus.CREATED);
     }
 
     private void generateTransactionRequestId(ShippingRequest request) {

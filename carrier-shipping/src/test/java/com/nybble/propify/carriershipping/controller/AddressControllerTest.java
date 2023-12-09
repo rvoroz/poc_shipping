@@ -16,75 +16,85 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.nybble.propify.carriershipping.entities.AddressValidationResponse;
+import com.nybble.propify.carriershipping.exception.AddressValidationRequestException;
 import com.nybble.propify.carriershipping.service.AddressService;
 
 @WebMvcTest(AddressController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class AddressControllerTest {
+class AddressControllerTest {
 
-    @MockBean
-    private AddressService addressService;
+        @MockBean
+        private AddressService addressService;
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @Test
-    public void validateAddressOk() throws Exception {
-        AddressValidationResponse xavResponse = new AddressValidationResponse();
-        when(addressService.addressValidation(any())).thenReturn(xavResponse);
+        @Test
+        void validateAddressOk() throws Exception {
+                AddressValidationResponse xavResponse = new AddressValidationResponse();
+                when(addressService.addressValidation(any())).thenReturn(xavResponse);
 
-        mockMvc.perform(post("/api/propify/addressValidation")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                        "{\"addressLine\": [\"26601 ALISO CREEK ROAD\",\"STE D\",\"ALISO VIEJO TOWN CENTER\", \"CA\"],\r\n"
-                                + //
-                                "\"state\": \"CA\", \"city\": \"ALISO VIEJO\"}"))
-                .andExpect(status().isOk());
-    }
+                mockMvc.perform(post("/api/propify/addressValidation")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                                "{\"streetAddress\": \"26601 ALISO CREEK ROAD\",\"additionalInfoAddress\": \"STE D ALISO VIEJO TOWN CENTER\",\r\n"
+                                                                + //
+                                                                "\"state\": \"CA\", \"city\": \"ALISO VIEJO\", \"postalCode\": \"92656\"}"))
+                                .andExpect(status().isOk());
+        }
 
-    @Test
-    public void validateAddress_WihtoutCity_returnErrorMessage() throws Exception {
-        AddressValidationResponse xavResponse = new AddressValidationResponse();
-        when(addressService.addressValidation(any())).thenReturn(xavResponse);
+        @Test
+        void validateAddress_WihtoutCity_returnErrorMessage() throws Exception {
+                AddressValidationResponse xavResponse = new AddressValidationResponse();
+                when(addressService.addressValidation(any())).thenReturn(xavResponse);
 
-        MvcResult result = mockMvc.perform(post("/api/propify/addressValidation")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                        "{\"addressLine\": [\"26601 ALISO CREEK ROAD\",\"STE D\",\"ALISO VIEJO TOWN CENTER\", \"CA\"],\r\n"
-                                + //
-                                "\"state\": \"CA\"}"))
-                .andExpect(status().isBadRequest()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        Assert.assertEquals("{\"code\":\"1002\",\"message\":\"The field city is required\"}", content);
-    }
+                mockMvc.perform(post("/api/propify/addressValidation")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                                "{\"streetAddress\": \"26601 ALISO CREEK ROAD\",\"additionalInfoAddress\": \"STE D ALISO VIEJO TOWN CENTER\",\r\n"
+                                                                + //
+                                                                "\"state\": \"CA\", \"postalCode\": \"92656\"}"))
+                                .andExpect(status().isOk()).andReturn();
+        }
 
-    @Test
-    public void validateAddress_WithoutAddressLine_returnErrorMessage() throws Exception {
-        AddressValidationResponse xavResponse = new AddressValidationResponse();
-        when(addressService.addressValidation(any())).thenReturn(xavResponse);
+        @Test
+        void validateAddress_WithoutAddressLine_returnErrorMessage() throws Exception {
+                AddressValidationResponse xavResponse = new AddressValidationResponse();
+                when(addressService.addressValidation(any())).thenReturn(xavResponse);
 
-        MvcResult result = mockMvc.perform(post("/api/propify/addressValidation")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                        "{\"state\": \"CA\", \"city\": \"ALISO VIEJO\"}"))
-                .andExpect(status().isBadRequest()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        Assert.assertEquals("{\"code\":\"1002\",\"message\":\"The field addressLine is required\"}", content);
-    }
+                MvcResult result = mockMvc.perform(post("/api/propify/addressValidation")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                                "{\"additionalInfoAddress\": \"STE D ALISO VIEJO TOWN CENTER\",\r\n" + //
+                                                                "\"state\": \"CA\", \"city\": \"ALISO VIEJO\", \"postalCode\": \"92656\"}"))
+                                .andExpect(status().isBadRequest()).andReturn();
+                String content = result.getResponse().getContentAsString();
+                Assert.assertEquals("{\"code\":\"2002\",\"message\":\"The field streetAddress is required\"}", content);
+        }
 
-    @Test
-    public void validateAddress_WithoutState_returnErrorMessage() throws Exception {
-        AddressValidationResponse xavResponse = new AddressValidationResponse();
-        when(addressService.addressValidation(any())).thenReturn(xavResponse);
+        @Test
+        void validateAddress_WithoutState_returnok() throws Exception {
+                AddressValidationResponse xavResponse = new AddressValidationResponse();
+                when(addressService.addressValidation(any())).thenReturn(xavResponse);
 
-        MvcResult result = mockMvc.perform(post("/api/propify/addressValidation")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(
-                        "{\"addressLine\": [\"26601 ALISO CREEK ROAD\",\"STE D\",\"ALISO VIEJO TOWN CENTER\", \"CA\"],\r\n"
-                                + //
-                                "\"city\": \"ALISO VIEJO\"}"))
-                .andExpect(status().isBadRequest()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        Assert.assertEquals("{\"code\":\"1002\",\"message\":\"The field state is required\"}", content);
-    }
+                mockMvc.perform(post("/api/propify/addressValidation")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                                "{\"streetAddress\": \"26601 ALISO CREEK ROAD\",\"additionalInfoAddress\": \"STE D ALISO VIEJO TOWN CENTER\",\r\n"
+                                                                + //
+                                                                "\"city\": \"ALISO VIEJO\", \"postalCode\": \"92656\"}"))
+                                .andExpect(status().isOk()).andReturn();
+        }
+
+        @Test
+        void validateAddress_WithoutStateCityAndPostalCode_returnErrorMessage() throws Exception {
+                when(addressService.addressValidation(any())).thenThrow(new AddressValidationRequestException());
+
+                mockMvc.perform(post("/api/propify/addressValidation")
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(
+                                                "{\"streetAddress\": \"26601 ALISO CREEK ROAD\",\"additionalInfoAddress\": \"STE D ALISO VIEJO TOWN CENTER\"\r\n"))
+                                .andExpect(status().isBadRequest()).andReturn();
+                
+        }
 }

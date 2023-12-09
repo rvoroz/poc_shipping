@@ -14,6 +14,7 @@
 
   <modules>
     <module>carrier-shipping</module>
+    <module>api-automation</module>
   </modules>
 
   <properties>

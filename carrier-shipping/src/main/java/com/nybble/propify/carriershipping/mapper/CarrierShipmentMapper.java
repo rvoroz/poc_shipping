@@ -1,7 +1,7 @@
 package com.nybble.propify.carriershipping.mapper;
 
 
-import com.nybble.propify.carriershipping.entities.CarrierShipment;
+import com.nybble.propify.carriershipping.model.CarrierShipment;
 
 import java.util.Optional;
 

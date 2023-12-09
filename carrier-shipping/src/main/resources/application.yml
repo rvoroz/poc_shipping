@@ -3,6 +3,8 @@ spring:
     active: "local"
     hikari:
       maximum-pool-size: 10
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,7 +20,6 @@ spring:
       on-profile: local
   datasource:
     url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
     password: ZrPGedhYkxgiwfr3I1uh
 shipping:
@@ -33,7 +34,6 @@ spring:
       on-profile: dev
   datasource:
     url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
     password: ZrPGedhYkxgiwfr3I1uh
 shipping:
@@ -45,10 +45,23 @@ shipping:
 spring:
   config:
     activate:
+      on-profile: test
+  datasource:
+    url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
+    username: admin
+    password: ZrPGedhYkxgiwfr3I1uh
+shipping:
+  sandbox: true
+  host: https://test.se-propify-ups.nybblenetwork.com
+
+---
+
+spring:
+  config:
+    activate:
       on-profile: prod
   datasource:
     url: jdbc:mysql://se-propify-ups-dev.cluster-cdzdurc22njb.us-east-1.rds.amazonaws.com:3306/shipping?useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
     password: ZrPGedhYkxgiwfr3I1uh
 shipping:
